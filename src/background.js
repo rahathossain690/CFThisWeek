@@ -258,7 +258,6 @@ function get_data(){
  * 
  */
 
-// set_default_settings()                  // set the settings
 
 chrome.alarms.create('DATA_PARSE', {periodInMinutes: 120})              // change time 
 chrome.alarms.create('DAILY_NOTIFICATION', {periodInMinutes: 1})
