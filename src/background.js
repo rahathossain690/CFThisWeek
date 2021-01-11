@@ -1,5 +1,7 @@
 
-
+/**
+ * Message
+ */
 
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
@@ -32,6 +34,7 @@ function set_default_settings() {
         div_3: true
     };
     chrome.storage.sync.set({'SETTING': settings}, () => {
+        // shut up
     })
 }
 
@@ -51,10 +54,10 @@ function set_default_settings() {
     }
     chrome.notifications.create('notification', noti_object)
 
-    chrome.browserAction.setIcon({path:"icon2.png"});
+    if(is_daily) chrome.browserAction.setIcon({path:"icon3.png"});
+    else chrome.browserAction.setIcon({path:"icon2.png"})
 
     chrome.notifications.onClicked.addListener(function(notificationId) {
-        // chrome.tabs.create({url: 'https://codeforces.com/contests'});
         chrome.browserAction.setIcon({path:"icon.png"});
     });
 
@@ -111,7 +114,7 @@ const daily_notification_alarm = () => {
             // let last_time = data.time_frame.last_daily_notification
             let today = get_current_date()
     
-            if(/** last_time && isEqual(last_time, today) &&**/ 1 == 0){ // epic tricks
+            if(/** last_time && isEqual(last_time, today) &&**/ 1 == 0){ // things we do for love
                 // no notifications for now
             }
             else {
@@ -134,9 +137,6 @@ const daily_notification_alarm = () => {
                     }).join()
                     if(notification_message){
                         show_notification("Hello! It's contest day", notification_message, true)
-                        // data.time_frame.last_daily_notification = today
-                        // console.log(data)
-                        // chrome.storage.sync.set({'DATA': data})
                     }
                 })
             }
@@ -196,7 +196,7 @@ const hour_notification_alarm = () => {
                         return contest.event
                     }).join()
                     if(notification_message){
-                        show_notification("Hello! You have a contest with an hour.", notification_message, false)
+                        show_notification("Hello! You have a contest within an hour.", notification_message, false)
                         // data.time_frame.last_daily_notification = today
                         // console.log(data)
                         // chrome.storage.sync.set({'DATA': data})
@@ -244,7 +244,7 @@ function get_data(){
             console.log(err)
         }
     }
-    xhr.open('GET', 'https://cfthisweek-extension-backend.herokuapp.com/dummy', true);
+    xhr.open('GET', 'https://cfthisweek-extension-backend.herokuapp.com/contest', true);
     xhr.send(null);
 }
 
@@ -260,9 +260,9 @@ function get_data(){
 
 // set_default_settings()                  // set the settings
 
-chrome.alarms.create('DATA_PARSE', {periodInMinutes: 0.1})              // change time 
-chrome.alarms.create('DAILY_NOTIFICATION', {periodInMinutes: 0.1})
-chrome.alarms.create('HOUR_NOTIFICATION', {periodInMinutes: 0.1})
+chrome.alarms.create('DATA_PARSE', {periodInMinutes: 120})              // change time 
+chrome.alarms.create('DAILY_NOTIFICATION', {periodInMinutes: 1})
+chrome.alarms.create('HOUR_NOTIFICATION', {periodInMinutes: 15})
 
 chrome.alarms.onAlarm.addListener((alarm) => {
     // alarm
@@ -282,5 +282,6 @@ if(migrate){
         })
     })
 } else{
+    get_data()
     set_default_settings()
 }

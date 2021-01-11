@@ -1,15 +1,15 @@
 {
-  "name": "-dummy-",
+  "name": "cfthisweek",
   "version": "1.0.0",
   "private": true,
   "description": "An extension that provides notification of Codeforces programming contests.",
   "license": "MIT",
   "author": {
-    "name": "Jack Steam",
-    "email": "jacksteamdev@gmail.com"
+    "name": "Rahat Hossain",
+    "email": "rahathossain690@gmail.com"
   },
   "scripts": {
-    "build": "cross-env NODE_ENV=production rollup -c && node image_transfer.js",
+    "build": "cross-env NODE_ENV=production rollup -c && node extra",
     "watch": "cross-env NODE_ENV=development rollup -w -c"
   },
   "dependencies": {
