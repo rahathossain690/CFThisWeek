@@ -9,7 +9,7 @@
     "email": "jacksteamdev@gmail.com"
   },
   "scripts": {
-    "build": "cross-env NODE_ENV=production rollup -c",
+    "build": "cross-env NODE_ENV=production rollup -c && node image_transfer.js",
     "watch": "cross-env NODE_ENV=development rollup -w -c"
   },
   "dependencies": {
