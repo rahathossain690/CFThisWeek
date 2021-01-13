@@ -1,44 +1,57 @@
 <!DOCTYPE html>
 <html>
-    <head>
-    </head>
+  <head> 
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cuprum&family=PT+Sans&display=swap" rel="stylesheet">
+  </head>
 
-    <body align="center">
-        <h1>CFThisWeek</h1>
+  <body align="center" style="font-family: 'Cuprum', sans-serif; font-size: 18px;">
+    <img style="margin: 16px 0 16px 0;" width= "300px" src="cfthisweek.svg" alt="cfThisWeek">
+    
+    <div align="left" style="width: 360px;" id="data_to_show">
 
-        <div style="width: 200px;" id="data_to_show">
+      <h2 align="left" style="margin-left: 8px; margin-bottom: 0px; color: #696969; font-size: 16px; display:inline-block;">CONTESTS&nbsp;<h2 style="margin-bottom: 0px; color: #DAA100; font-size: 16px; display:inline-block;">THIS WEEK</h2></h2>
+      
+      <div id="contest_data" style="background-color: #FFFDF8; text-decoration: none; border: 1px solid #cfcfcf; margin: 4px 4px 16px 4px; padding: 8px 18px; border-radius: 4px;font-family: 'PT Sans', sans-serif; color: #425E9C;">
+        
+          <h2>No contest in this week. Enjoy</h2>
+      </div>
 
-            <div id="contest_data" style="border: 1px solid grey; margin: 5px 5px;">
-                <h6>No contest in this week. Enjoy</h6>
-            </div>
+      <h2 align="left" style="margin-left: 8px; margin-bottom: 0px; color: #696969;font-size: 16px;">NOTIFICATIONS TIME</h3>
+      <form style="border: 1px solid #cfcfcf; margin: 4px 4px 16px 4px; padding: 16px; border-radius: 4px; font-family: 'PT Sans', sans-serif; color: #425E9C;">
 
-            <form style="border: 1px solid grey; margin: 5px 5px;">
-                <h3>Notification Settings</h3>
+        <li style="list-style-type: none;">
+          <input type="checkbox" id="daily" value="Daily Notification" />
+          <label for="daily">Daily Updates</label>
+        </li>
 
-                <input type="checkbox" id="daily" value="Daily Notification">
-                <label for="daily">Daily</label>
+        <li style="list-style-type: none; padding-top: 16px;">
+          <input type="checkbox" id="hourly" value="Hourly Notification" />
+          <label for="daily">Daily + 1 Hour before contest</label>
+        </li>
+      </form>
 
-                <input type="checkbox" id="hourly" value="Hourly Notification">
-                <label for="daily">Within an hour before contest</label>
-                <br>
-            </form>
+      <h2 align="left" style="margin-left: 8px; margin-bottom: 0px; color: #696969; font-size: 16px;">NOTIFICATIONS FOR</h3>
+      <form style="border: 1px solid #cfcfcf; margin: 4px 4px 16px 4px; padding: 16px;  border-radius: 4px; font-family: 'PT Sans', sans-serif; color: #425E9C;">
+          <li style="list-style-type: none;">
+            <input type="checkbox" id="div_1" value="div_1" />
+            <label for="div_1">Div. 1</label>
+          </li>
+          <li style="list-style-type: none; padding-top: 16px;">
+            <input type="checkbox" id="div_2" value="div_2" />
+            <label for="div_2">Div. 2</label>
+          </li>
+          <li style="list-style-type: none; padding-top: 16px;">
+            <input type="checkbox" id="div_3" value="div_3" />
+            <label for="div_3">Div. 3</label><br />
+          </li>
+        
+      </form>
 
-            <form style="border: 1px solid grey; margin: 5px 5px;">
-                <h3>Codeforces Division</h3>
-
-                <input type="checkbox" id="div_1" value="div_1">
-                <label for="div_1">Div. 1</label>
-
-                <input type="checkbox" id="div_2" value="div_2">
-                <label for="div_2">Div. 2</label>
-
-                <input type="checkbox" id="div_3" value="div_3">
-                <label for="div_3">Div. 3</label><br>
-            </form>
-        </div>
-        <i>For any feedback <a href="https://www.linkedin.com/in/rahathossain9678/">contact</a></i>
-
-
-        <script src="popup.js"></script>
-    </body>
+      <h3 align="center" style="margin-left: 8px; margin-bottom: 0px; font-size: 15px;"><a style="text-decoration: none; color: #cfcfcf;" target="_blank" href="https://www.linkedin.com/in/rahathossain9678">Contact&nbsp;&nbsp;&nbsp;</a> <a style="text-decoration: none; color: #cfcfcf;" target="_blank" href="https://github.com/rahathossain690/CFThisWeek">&nbsp;&nbsp;&nbsp;Github</a></h3> 
+      
+    </div>
+    
+    <script src="popup.js" type="module"></script>
+  </body>
 </html>
