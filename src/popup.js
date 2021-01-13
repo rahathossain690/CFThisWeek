@@ -111,7 +111,7 @@ function contest_data() {
         if(data && data.contests) {
             document.getElementById('contest_data').innerHTML = ''
             data.contests.filter(contest => {
-                let elem = document.createElement('h3')
+                let elem = document.createElement('h4')
                 elem.innerHTML = `<a href='${contest.href}' target="_blank">` + contest.event + '</a>'
                 document.getElementById('contest_data').appendChild(elem)
             })
