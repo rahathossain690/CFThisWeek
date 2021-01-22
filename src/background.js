@@ -63,6 +63,7 @@ function set_default_settings() {
 
     chrome.storage.sync.get(['TIME_FRAME'], par_tf => {
         let time_frame = par_tf.TIME_FRAME 
+        // console.log('tf got', is_daily, time_frame)
         if(!time_frame){
             time_frame = {
                 last_daily_notification : null,
@@ -70,8 +71,9 @@ function set_default_settings() {
                 last_parse : null
             }
         }
-        if(is_daily && message) time_frame.last_daily_notification = get_current_date()
-        else if(!is_daily && message) time_frame.last_hourly_notification = get_current_date()
+        if(is_daily) time_frame.last_daily_notification = get_current_date()
+        else if(!is_daily) time_frame.last_hourly_notification = (new Date()).getTime()
+        // console.log('setting', is_daily, time_frame)
         chrome.storage.sync.set({'TIME_FRAME': time_frame});
     })
  }
@@ -97,7 +99,7 @@ function set_default_settings() {
 
 
 
-const daily_notification_alarm = () => {
+const daily_notification_alarm = (cb) => {
     chrome.storage.sync.get(['TIME_FRAME'], par_tf => {
         let time_frame = par_tf.TIME_FRAME
 
@@ -137,7 +139,10 @@ const daily_notification_alarm = () => {
                     }).join()
                     if(notification_message){
                         show_notification("Hello! It's contest day", notification_message, true)
+
+                        
                     }
+                    if(cb && typeof cb == 'function') cb()
                 })
             }
         })
@@ -152,10 +157,20 @@ const hour_notification_alarm = () => {
     chrome.storage.sync.get(['TIME_FRAME'], par_tf => {
         let time_frame = par_tf.TIME_FRAME
         
-        if(time_frame && isEqual(time_frame.last_hourly_notification, get_current_date())){
-            // no need
-            return
+        // if(time_frame && isEqual(time_frame.last_hourly_notification, get_current_date())){
+        //     // no need
+        //     return
+        // }
+        // console.log(time_frame)
+
+        if(time_frame && time_frame.last_hourly_notification){
+            let current = (new Date()).getTime()
+            let prev = time_frame.last_hourly_notification
+            let diff = (current - prev) / (1000 * 60)
+            // console.log(diff)
+            if(0 <= diff && diff <= 60) return; // within an hour no need 
         }
+
         // console.log(time_frame)
         // if(time_frame && time_frame.last_hourly_notification){
         //     const differ = date_difference_in_minute(new Date, time_frame.last_hourly_notification); console.log(differ)
@@ -170,7 +185,7 @@ const hour_notification_alarm = () => {
             // let last_time = data.time_frame.last_daily_notification
             let today = get_current_date()
     
-            if(/** last_time && isEqual(last_time, today) &&**/ 1 == 0){ // epic tricks
+            if(/** last_time && isEqual(last_time, today) &&**/ 1 == 0){
                 // no notifications for now
             }
             else {
@@ -184,7 +199,10 @@ const hour_notification_alarm = () => {
                         
                         const cur_date = new Date();
                         const con_date = new Date(contest.start)
-                        const diff = (con_date.getTime() - cur_date.getTime()) / (1000 * 60);
+                        // console.log(cur_date)
+                        // console.log(contest.start)
+                        // console.log(con_date)
+                        const diff = (con_date.getTime() - cur_date.getTime()) / (1000 * 60);  //console.log(diff)
                         if(!(0 <= diff && diff <= 60)) return false;
 
                         if(settings.div_1 && contest.div.indexOf('Div. 1') != -1) return true
@@ -215,7 +233,7 @@ const data_parsing_alarm = () => {
     get_data()
 }
 
-function get_data(){
+function get_data(cb){
     var xhr = new XMLHttpRequest();
     xhr.onload = function() {
         try{
@@ -240,6 +258,7 @@ function get_data(){
                     })
                 }
             })
+            if(cb && typeof cb == 'function') cb()
         }catch(err){
             console.log(err)
         }
@@ -259,11 +278,13 @@ function get_data(){
  */
 
 
-chrome.alarms.create('DATA_PARSE', {periodInMinutes: 120})              // change time 
-chrome.alarms.create('DAILY_NOTIFICATION', {periodInMinutes: 1})
-chrome.alarms.create('HOUR_NOTIFICATION', {periodInMinutes: 15})
+chrome.alarms.create('DATA_PARSE', {periodInMinutes: 24 * 60})               
+// let date = new Date()
+// date.setSeconds(date.getSeconds() + 5)
+chrome.alarms.create('DAILY_NOTIFICATION', {periodInMinutes: 2, delayInMinutes: 1})
+chrome.alarms.create('HOUR_NOTIFICATION', {periodInMinutes: 2})
 
-chrome.alarms.onAlarm.addListener((alarm) => {
+chrome.alarms.onAlarm.addListener((alarm) => { //console.log(alarm)
     // alarm
     if(alarm.name == 'DATA_PARSE') data_parsing_alarm()
     if(alarm.name == 'DAILY_NOTIFICATION') daily_notification_alarm()
@@ -276,8 +297,10 @@ const migrate = true
 if(migrate){
     chrome.storage.sync.get( data => {
         chrome.storage.sync.remove( Object.keys(data), () => {
-            get_data()
             set_default_settings()
+            get_data( () => {
+                daily_notification_alarm( hour_notification_alarm ) // TODO: need to find a better way to do this
+            } )
         })
     })
 } else{

@@ -108,17 +108,24 @@ document.getElementById('div_3').addEventListener('change', () => {
 function contest_data() {
     chrome.storage.sync.get(['DATA'], par_data => {
         const data = par_data.DATA
-        if(data && data.contests) {
+        if(data && data.contests && data.contests.length !== 0) {
             document.getElementById('contest_data').innerHTML = ''
+            let total_contests = data.contests.length
             data.contests.filter(contest => {
-                let elem = document.createElement('h4')
-                elem.innerHTML = `<a href='${contest.href}' target="_blank">` + contest.event + '</a>'
+                let elem = document.createElement('div')
+                elem.innerHTML = `<a href='${contest.href}' target="_blank">${contest.event}</a><br><label style="font-size: 12px">${new Date(contest.start).toLocaleString()}</label>`
+                total_contests -= 1
+                if(total_contests !== 0) elem.innerHTML += '<hr style="background-color: #cfcfcf">'
                 document.getElementById('contest_data').appendChild(elem)
             })
+        } else{
+            document.getElementById('contest_data').innerHTML = ''
+            let elem = document.createElement('h3')
+            elem.innerHTML = 'No contest in this week. Enjoy!'
+            document.getElementById('contest_data').appendChild(elem)
         }
     })
 }
-
 
 chrome.browserAction.setIcon({path:"icon.png"});
 contest_data()
