@@ -4,17 +4,17 @@ A Chrome extension that shows notification of upcoming codeforces contest on dai
 ![cfThisWeek UI](https://i.imgur.com/qA8eixw.png)
 
 # Using this with developer mode on Chrome
-1. Open google chrome and go to Extension manager. Select developer option (Check the option).
-2. Donwload zip file from github release. Unzip the folder.
+1. Download zip file from github release (or the zip file from 'releases' folder). Unzip the folder.
+2. Open google chrome and go to Extension manager. Select developer option (Check the option).
 3. Go to extension manager, click 'Load Unpacked'.
 4. Select the unzipped folder.
 
-It should work fine.
+It should work fine. Pin the extension to chrome for better experience. 
 
 # Features
 * Shows a notification once in a day on the day of contest.
-* Shows notifications before one hour of contest.
-* Extension icon color will change after each notification (In case user misses the notification; yellow color for daily notifiaction and red for hourly notification).
+* Shows notification before one hour of contest.
+* Extension icon color will change after each notification (In case user misses the notification; Icon will turn yellow for daily notifiaction and red for hourly notification).
 * Allows selection over contest divisions.
 * Allows turning on/off each type of notifications.
 * Shows week's contests.
@@ -27,10 +27,10 @@ It should work fine.
 4. Do some coding...
 5. Type `npm run build` to build the code.
 6. Open google chrome and go to Extension manager. Select developer option (Check).
-7. click "Load unpacked", and choose the dist folder.
+7. click "Load unpacked", and choose the 'dist' folder.
 8. Commit and push changes.
 9. Make a pull request.
 10. Volla!
 
 ## Extra
-This project is still in infancy and not published yet. Any feedback/contribution is highly appreciated.
+This project is still in infancy and not published yet. Any feedback/contribution is highly appreciated. And thanks to [Shameme](https://github.com/shamemezahid) for furnishing the UI.
