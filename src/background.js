@@ -27,8 +27,8 @@ chrome.runtime.onMessage.addListener(
 
 function set_default_settings() {
     chrome.storage.sync.get(['SETTING'], par_tf => {
-        let time_frame = par_tf.TIME_FRAME
-        if(par_tf && par_tf.TIME_FRAME) return;
+        let time_frame = par_tf.SETTING
+        if(par_tf && par_tf.SETTING) return;
         
         let settings = {
             daily_notification : true,
