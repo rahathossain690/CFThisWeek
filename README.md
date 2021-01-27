@@ -1,7 +1,8 @@
 # CFThisWeek
 A Chrome extension that shows notification of upcoming codeforces contest on daily basis and before certain period of each Codeforces contest. It also provides little bit of customization over notification system.
 
-![cfThisWeek UI](https://i.imgur.com/qA8eixw.png)
+![cfThisWeek UI](https://i.imgur.com/CctiLVD.png)
+![cfThisWeek UI](https://i.imgur.com/p0HTiDn.png)
 
 # Using this with developer mode on Chrome
 1. Download zip file from github release (or the zip file from 'releases' folder). Unzip the folder.
