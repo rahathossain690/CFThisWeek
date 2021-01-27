@@ -26,15 +26,20 @@ chrome.runtime.onMessage.addListener(
 
 
 function set_default_settings() {
-    let settings = {
-        daily_notification : true,
-        hourly_notification: true,
-        div_1: true,
-        div_2: true,
-        div_3: true
-    };
-    chrome.storage.sync.set({'SETTING': settings}, () => {
-        // shut up
+    chrome.storage.sync.get(['SETTING'], par_tf => {
+        let time_frame = par_tf.TIME_FRAME
+        if(par_tf && par_tf.TIME_FRAME) return;
+        
+        let settings = {
+            daily_notification : true,
+            hourly_notification: true,
+            div_1: true,
+            div_2: true,
+            div_3: true
+        };
+        chrome.storage.sync.set({'SETTING': settings}, () => {
+            // shut up
+        })
     })
 }
 
@@ -304,6 +309,8 @@ if(migrate){
         })
     })
 } else{
-    get_data()
     set_default_settings()
+        get_data( () => {
+            daily_notification_alarm( hour_notification_alarm ) // TODO: need to find a better way to do this
+        } )
 }
