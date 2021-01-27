@@ -25,10 +25,10 @@ chrome.runtime.onMessage.addListener(
  */
 
 
-function set_default_settings() {
+function set_default_settings(migrate) {
     chrome.storage.sync.get(['SETTING'], par_tf => {
-        let time_frame = par_tf.SETTING
-        if(par_tf && par_tf.SETTING) return;
+        
+        if(par_tf && par_tf.SETTING && !migrate) return;
         
         let settings = {
             daily_notification : true,
@@ -297,20 +297,20 @@ chrome.alarms.onAlarm.addListener((alarm) => { //console.log(alarm)
 })
 
 
-const migrate = true
+const migrate = false
 
 if(migrate){
     chrome.storage.sync.get( data => {
         chrome.storage.sync.remove( Object.keys(data), () => {
-            set_default_settings()
+            set_default_settings(migrate)
             get_data( () => {
                 daily_notification_alarm( hour_notification_alarm ) // TODO: need to find a better way to do this
             } )
         })
     })
 } else{
-    set_default_settings()
-        get_data( () => {
-            daily_notification_alarm( hour_notification_alarm ) // TODO: need to find a better way to do this
-        } )
+    set_default_settings(migrate)
+    get_data( () => {
+        daily_notification_alarm( hour_notification_alarm ) // TODO: need to find a better way to do this
+    } )
 }
