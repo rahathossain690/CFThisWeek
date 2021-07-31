@@ -105,6 +105,14 @@ document.getElementById('div_3').addEventListener('change', () => {
     })
 })
 
+document.getElementById("khuljasimsim").addEventListener('dblclick', () => {
+    if(document.getElementById("hidden_cell").style.display == "none") {
+        document.getElementById("hidden_cell").style.display = "block"
+    } else {
+        document.getElementById("hidden_cell").style.display = "none"
+    }
+})
+
 function contest_data() { //console.log('called')
     chrome.storage.sync.get(['DATA'], par_data => {
         const data = par_data.DATA
@@ -118,6 +126,7 @@ function contest_data() { //console.log('called')
                 if(total_contests !== 0) elem.innerHTML += '<hr style="background-color: #cfcfcf">'
                 document.getElementById('contest_data').appendChild(elem)
             })
+            document.getElementById("active_devices").innerHTML = `Active devices: ${data.active_devices}`
         } else{
             document.getElementById('contest_data').innerHTML = ''
             let elem = document.createElement('h3')
@@ -127,6 +136,7 @@ function contest_data() { //console.log('called')
         //console.log('should change')
     })
 }
+
 
 chrome.browserAction.setIcon({path:"icon.png"});
 contest_data()
